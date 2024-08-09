@@ -1,0 +1,20 @@
+{
+  "name": "challenge-4",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.17.0",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.4.5",
+    "express": "~4.16.1",
+    "fastest-validator": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "~1.9.1",
+    "swagger-ui-express": "^5.0.1"
+  }
+}

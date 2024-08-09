@@ -1,0 +1,943 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SYSTEM BANKING API",
+    "version": "1.0.0",
+    "description": "API for managing baking system."
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Endpoints for managing users."
+    },
+    {
+      "name": "Accounts",
+      "description": "Endpoints for managing accounts."
+    },
+    {
+      "name": "Transactions",
+      "description": "Endpoints for managing transactions."
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "alfath"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "alfath"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "6285325224829"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "pati, jawa tengah"
+                  },
+                  "dob": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2001-04-13"
+                  }
+                },
+                "required": [
+                  "name",
+                  "username",
+                  "password",
+                  "phone",
+                  "address",
+                  "dob"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success Create User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users",
+        "responses": {
+          "200": {
+            "description": "List of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "alfath"
+                          },
+                          "username": {
+                            "type": "string",
+                            "example": "alfath"
+                          },
+                          "password": {
+                            "type": "string",
+                            "example": "$2b$10$YGxZg64HoywcLvVrDrck5em6q5kXz0boHxI.ZrMVRmDfsxrCh3Wmq"
+                          },
+                          "phone": {
+                            "type": "string",
+                            "example": "6285325224829"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "pati, jawa tengah"
+                          },
+                          "dob": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2001-04-13T00:00:00.000Z"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-08-09T11:31:41.052Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-08-09T11:31:41.052Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "alfath"
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "alfath"
+                        },
+                        "password": {
+                          "type": "string",
+                          "example": "$2b$10$YGxZg64HoywcLvVrDrck5em6q5kXz0boHxI.ZrMVRmDfsxrCh3Wmq"
+                        },
+                        "phone": {
+                          "type": "string",
+                          "example": "6285325224829"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "pati, jawa tengah"
+                        },
+                        "dob": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2001-04-13T00:00:00.000Z"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-08-09T11:31:41.052Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-08-09T11:31:41.052Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "tata"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "redha"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "6285325224829"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "pati, jawa tengah"
+                  },
+                  "dob": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2001-04-13"
+                  }
+                },
+                "required": [
+                  "name",
+                  "username",
+                  "password",
+                  "phone",
+                  "address",
+                  "dob"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success Update User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success delete user"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts": {
+      "post": {
+        "tags": ["Accounts"],
+        "summary": "Create a new account",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bankName": {
+                    "type": "string",
+                    "example": "BRI SIMPEDES"
+                  },
+                  "userId": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                },
+                "required": ["bankName", "userId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success Create Account"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Accounts"],
+        "summary": "Get all accounts",
+        "responses": {
+          "200": {
+            "description": "List of accounts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "bankName": {
+                            "type": "string",
+                            "example": "BRI SIMPEDES"
+                          },
+                          "accountNumber": {
+                            "type": "string",
+                            "example": "703369770718380"
+                          },
+                          "balance": {
+                            "type": "string",
+                            "example": "0"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-08-09T11:41:37.531Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-08-09T11:41:37.531Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{id}": {
+      "get": {
+        "tags": ["Accounts"],
+        "summary": "Get account by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "bankName": {
+                          "type": "string",
+                          "example": "BRI OKE"
+                        },
+                        "accountNumber": {
+                          "type": "string",
+                          "example": "703369770718380"
+                        },
+                        "balance": {
+                          "type": "string",
+                          "example": "0"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-08-09T11:41:37.531Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-08-09T11:43:27.013Z"
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "alfath"
+                            },
+                            "username": {
+                              "type": "string",
+                              "example": "alfath"
+                            },
+                            "phone": {
+                              "type": "string",
+                              "example": "6285325224829"
+                            },
+                            "address": {
+                              "type": "string",
+                              "example": "pati, jawa tengah"
+                            },
+                            "dob": {
+                              "type": "string",
+                              "format": "date-time",
+                              "example": "2001-04-13T00:00:00.000Z"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Accounts"],
+        "summary": "Update account by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bankName": {
+                    "type": "string",
+                    "example": "BRI OKE"
+                  }
+                },
+                "required": ["bankName"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success Update Account"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Accounts"],
+        "summary": "Delete account by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success delete Account"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Create a new transaction",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "TRANSFER"
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "example": 5000
+                  },
+                  "information": {
+                    "type": "string",
+                    "example": "Transfer ke kamu"
+                  },
+                  "accountId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "accountTargetId": {
+                    "type": "integer",
+                    "example": 2
+                  }
+                },
+                "required": [
+                  "type",
+                  "amount",
+                  "information",
+                  "accountId",
+                  "accountTargetId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Transaction created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success Create Transaction"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "trxCode": {
+                          "type": "string",
+                          "example": "289978530884129"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "TRANSFER"
+                        },
+                        "amount": {
+                          "type": "string",
+                          "example": "5000"
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-08-09T12:07:34.292Z"
+                        },
+                        "information": {
+                          "type": "string",
+                          "example": "Transfer ke kamu"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-08-09T12:07:34.275Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-08-09T12:07:34.275Z"
+                        },
+                        "accountId": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "accountTargetId": {
+                          "type": "integer",
+                          "example": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get all transactions",
+        "responses": {
+          "200": {
+            "description": "List of transactions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "TRANSFER"
+                          },
+                          "amount": {
+                            "type": "string",
+                            "example": "5000"
+                          },
+                          "date": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-08-09T12:07:34.292Z"
+                          },
+                          "information": {
+                            "type": "string",
+                            "example": "Transfer ke kamu"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/{id}": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get transaction by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "TRANSFER"
+                        },
+                        "amount": {
+                          "type": "string",
+                          "example": "5000"
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-08-09T12:07:34.292Z"
+                        },
+                        "information": {
+                          "type": "string",
+                          "example": "Transfer ke kamu"
+                        },
+                        "account": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "bankName": {
+                              "type": "string",
+                              "example": "BRI OKE"
+                            },
+                            "accountNumber": {
+                              "type": "string",
+                              "example": "703369770718380"
+                            },
+                            "user": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "example": 1
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "example": "alfath"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "accountTarget": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 2
+                            },
+                            "bankName": {
+                              "type": "string",
+                              "example": "BCA BISNIS"
+                            },
+                            "accountNumber": {
+                              "type": "string",
+                              "example": "417804056578636"
+                            },
+                            "user": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "example": 2
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "example": "tata redha"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
