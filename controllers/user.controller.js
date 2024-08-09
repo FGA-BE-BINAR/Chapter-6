@@ -6,7 +6,15 @@ const bcrypt = require("bcrypt");
 module.exports = {
   index: async (req, res, next) => {
     try {
-      let users = await prisma.user.findMany();
+      let users = await prisma.user.findMany({
+        select: {
+          id: true,
+          name: true,
+          phone: true,
+          address: true,
+          dob: true,
+        },
+      });
       return res.json({ status: "success", data: users });
     } catch (error) {
       return res
@@ -70,6 +78,7 @@ module.exports = {
 
   update: async (req, res, next) => {
     try {
+      const user = req.user;
       const source = req.body;
       const id = parseInt(req.params.id);
 
@@ -87,6 +96,13 @@ module.exports = {
         return res.status(400).json({
           status: "error",
           message: validate,
+        });
+      }
+
+      if (id != user.id) {
+        return res.status(400).json({
+          status: "error",
+          message: "You don't have access to this data",
         });
       }
 
@@ -143,6 +159,9 @@ module.exports = {
           message: "User data not found",
         });
 
+      delete user.password;
+      delete user.username;
+
       return res.json({ status: "success", data: user });
     } catch (error) {
       return res.status(500).json({ status: "error", message: error.message });
@@ -151,11 +170,20 @@ module.exports = {
 
   delete: async (req, res, next) => {
     try {
+      const user = req.user;
       const id = parseInt(req.params.id);
-      const user = await prisma.user.findUnique({
+
+      if (id != user.id) {
+        return res.status(400).json({
+          status: "error",
+          message: "You don't have access to this data",
+        });
+      }
+
+      const exisingUser = await prisma.user.findUnique({
         where: { id: id },
       });
-      if (!user)
+      if (!exisingUser)
         return res.status(404).json({
           status: "error",
           message: "User data not found",

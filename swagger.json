@@ -5,7 +5,20 @@
     "version": "1.0.0",
     "description": "API for managing baking system."
   },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
   "tags": [
+    {
+      "name": "Auth",
+      "description": "Endpoints for authentication."
+    },
     {
       "name": "Users",
       "description": "Endpoints for managing users."
@@ -20,6 +33,88 @@
     }
   ],
   "paths": {
+    "/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login to get a JWT token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "redha"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful and JWT token returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOjIsImlhdCI6MTcyMzIwNTcwNiwiZXhwIjoxNzIzMjA5MzA2fQ.vhvUvj2wcd9mK4KF0uTzVCwYIRfyJ6Vp0buHg910QPc"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Sign out to invalidate the JWT token",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logout successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "success logout"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/users": {
       "post": {
         "tags": ["Users"],
@@ -95,6 +190,11 @@
       "get": {
         "tags": ["Users"],
         "summary": "Get all users",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "List of users",
@@ -166,6 +266,11 @@
       "get": {
         "tags": ["Users"],
         "summary": "Get user by ID",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -243,6 +348,11 @@
       "put": {
         "tags": ["Users"],
         "summary": "Update user by ID",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -325,6 +435,11 @@
       "delete": {
         "tags": ["Users"],
         "summary": "Delete user by ID",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -364,6 +479,11 @@
       "post": {
         "tags": ["Accounts"],
         "summary": "Create a new account",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -411,6 +531,11 @@
       "get": {
         "tags": ["Accounts"],
         "summary": "Get all accounts",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "List of accounts",
@@ -469,6 +594,11 @@
       "get": {
         "tags": ["Accounts"],
         "summary": "Get account by ID",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -563,6 +693,11 @@
       "put": {
         "tags": ["Accounts"],
         "summary": "Update account by ID",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -617,6 +752,11 @@
       "delete": {
         "tags": ["Accounts"],
         "summary": "Delete account by ID",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -656,6 +796,11 @@
       "post": {
         "tags": ["Transactions"],
         "summary": "Create a new transaction",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -769,6 +914,11 @@
       "get": {
         "tags": ["Transactions"],
         "summary": "Get all transactions",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "List of transactions",
@@ -822,6 +972,11 @@
       "get": {
         "tags": ["Transactions"],
         "summary": "Get transaction by ID",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",

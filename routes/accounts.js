@@ -5,10 +5,10 @@ const accountController = require("../controllers/account.controller");
 
 const authMiddleware = require("../middleware/auth.middleware");
 
-router.get("/", accountController.index);
-router.post("/", accountController.create);
-router.put("/:id", accountController.update);
-router.get("/:id", accountController.detail);
-router.delete("/:id", accountController.delete);
+router.get("/", authMiddleware.cekAuth, accountController.index);
+router.post("/", authMiddleware.cekAuth, accountController.create);
+router.put("/:id", authMiddleware.cekAuth, accountController.update);
+router.get("/:id", authMiddleware.cekAuth, accountController.detail);
+router.delete("/:id", authMiddleware.cekAuth, accountController.delete);
 
 module.exports = router;

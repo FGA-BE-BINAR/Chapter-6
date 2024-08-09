@@ -13,8 +13,8 @@ module.exports = {
     try {
       const jwtToken = token.replace("Bearer ", "");
       const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET);
-      console.log("decoded :", decoded);
-      // req.user = decoded.user;
+
+      req.user = decoded;
       next();
     } catch (error) {
       res.status(401).json({ msg: "invalid token" });

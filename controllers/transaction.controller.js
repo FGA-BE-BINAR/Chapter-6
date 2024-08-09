@@ -7,13 +7,24 @@ const v = new Validator();
 module.exports = {
   index: async (req, res, next) => {
     try {
+      const user = req.user;
       let transaction = await prisma.transaction.findMany({
+        where: {
+          account: {
+            userId: user.id,
+          },
+        },
         select: {
           id: true,
           type: true,
           amount: true,
           date: true,
           information: true,
+          account: {
+            select: {
+              userId: true,
+            },
+          },
         },
       });
 
@@ -26,6 +37,8 @@ module.exports = {
   create: async (req, res, next) => {
     try {
       const source = req.body;
+      const user = req.user;
+
       const schema = {
         type: {
           type: "enum",
@@ -49,8 +62,8 @@ module.exports = {
       // Use $transaction with an array of operations
       const result = await prisma.$transaction(async (prisma) => {
         // cek account
-        const account = await prisma.account.findUnique({
-          where: { id: parseInt(source.accountId) },
+        const account = await prisma.account.findFirst({
+          where: { id: parseInt(source.accountId), userId: user.id },
         });
         if (!account) {
           throw new Error("Account not found");
@@ -142,9 +155,10 @@ module.exports = {
 
   detail: async (req, res, next) => {
     try {
+      const user = req.user;
       const id = parseInt(req.params.id);
-      const transaction = await prisma.transaction.findUnique({
-        where: { id },
+      const transaction = await prisma.transaction.findFirst({
+        where: { id, account: { userId: user.id } },
         select: {
           id: true,
           type: true,

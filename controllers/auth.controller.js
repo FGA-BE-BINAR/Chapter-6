@@ -26,7 +26,7 @@ module.exports = {
     if (!existingUser)
       return res
         .status(401)
-        .json({ status: "error", message: "Invalid Account / Password" });
+        .json({ status: "error", message: "Invalid Username / Password" });
 
     const isValidPassword = bcrypt.compareSync(
       source.password,
@@ -35,12 +35,12 @@ module.exports = {
     if (!isValidPassword)
       return res
         .status(404)
-        .json({ status: "error", message: "Invalid Account / Password" });
+        .json({ status: "error", message: "Invalid Username / Password" });
 
     const payloadToken = {
-      accountId: existingUser.id,
-      userId: existingUser.userId,
-      email: existingUser.email,
+      id: existingUser.id,
+      name: existingUser.name,
+      username: existingUser.username,
     };
     const token = jwt.sign(payloadToken, process.env.JWT_SECRET, {
       expiresIn: "1h",
@@ -49,5 +49,9 @@ module.exports = {
       status: "success",
       data: token,
     });
+  },
+
+  signout: async (req, res, next) => {
+    return res.json({ status: "success", message: "success logout" });
   },
 };

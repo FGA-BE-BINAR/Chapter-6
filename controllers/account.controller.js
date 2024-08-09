@@ -1,4 +1,3 @@
-const bcrypt = require("bcrypt");
 const prisma = require("../config/prisma");
 const Validator = require("fastest-validator");
 const generaetRandom = require("../utils/random");
@@ -7,6 +6,7 @@ const v = new Validator();
 module.exports = {
   index: async (req, res, next) => {
     try {
+      let user = req.user;
       let accounts = await prisma.account.findMany({
         select: {
           id: true,
@@ -15,6 +15,9 @@ module.exports = {
           balance: true,
           createdAt: true,
           updatedAt: true,
+        },
+        where: {
+          userId: user.id,
         },
       });
       return res.json({ status: "success", data: accounts });
@@ -25,7 +28,9 @@ module.exports = {
 
   create: async (req, res, next) => {
     try {
+      const user = req.user;
       const source = req.body;
+
       const schema = {
         bankName: { type: "string", empty: false },
         userId: { type: "number", empty: false },
@@ -38,6 +43,12 @@ module.exports = {
           message: validate,
         });
       }
+
+      if (user.id != source.userId)
+        return res.status(400).json({
+          status: "error",
+          message: "Your userId not valid your own id",
+        });
 
       let accountNumber;
       let accountChecker = true;
@@ -52,10 +63,10 @@ module.exports = {
       }
 
       // check user
-      const user = await prisma.user.findUnique({
+      const existingUser = await prisma.user.findUnique({
         where: { id: parseInt(source.userId) },
       });
-      if (!user)
+      if (!existingUser)
         return res
           .status(400)
           .json({ status: "error", message: "User not found" });
@@ -86,6 +97,7 @@ module.exports = {
   update: async (req, res, next) => {
     try {
       const source = req.body;
+      const user = req.user;
       const id = parseInt(req.params.id);
       const schema = {
         bankName: { type: "string", empty: false },
@@ -99,8 +111,8 @@ module.exports = {
         });
       }
 
-      const existingAccount = await prisma.account.findUnique({
-        where: { id },
+      const existingAccount = await prisma.account.findFirst({
+        where: { id, userId: user.id },
       });
       if (!existingAccount)
         return res
@@ -108,7 +120,7 @@ module.exports = {
           .json({ status: "error", message: "Account data not found" });
 
       let payload = {
-        bankName: source.bankName
+        bankName: source.bankName,
       };
 
       await prisma.account.update({
@@ -124,9 +136,10 @@ module.exports = {
 
   detail: async (req, res, next) => {
     try {
+      const user = req.user;
       const id = parseInt(req.params.id);
-      const account = await prisma.account.findUnique({
-        where: { id },
+      const account = await prisma.account.findFirst({
+        where: { id, userId: user.id },
         select: {
           id: true,
           bankName: true,
@@ -159,8 +172,11 @@ module.exports = {
 
   delete: async (req, res, next) => {
     try {
+      const user = req.user;
       const id = parseInt(req.params.id);
-      const account = await prisma.account.findUnique({ where: { id } });
+      const account = await prisma.account.findFirst({
+        where: { id, userId: user.id },
+      });
       if (!account)
         return res
           .status(404)
