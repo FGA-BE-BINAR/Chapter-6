@@ -6,7 +6,7 @@
     "generate": "prisma generate",
     "migrate": "prisma migrate deploy",
     "start": "nodemon ./bin/www",
-    "postinstall": "npx prisma generate && npm run migrate"
+    "postinstall": "chmod +x ./node_modules/.bin/prisma && npx prisma generate && npm run migrate"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
