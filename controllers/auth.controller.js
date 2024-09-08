@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   signin: async (req, res, next) => {
     const source = req.body;
-    console.log("body:", source)
     const schema = {
       username: { type: "string", empty: false },
       password: { type: "string", empty: false },
