@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "generate": "prisma generate",
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
