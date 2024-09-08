@@ -5,7 +5,7 @@
   "scripts": {
     "migrate": "prisma migrate deploy",
     "start": "nodemon ./bin/www",
-    "postinstall": "npx prisma generate",
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
