@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "migrate": "prisma migrate deploy",
+    "generate": "prisma generate",
     "start": "nodemon ./bin/www",
-    "postinstall": "npm run migrate"
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
